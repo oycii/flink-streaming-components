@@ -8,5 +8,5 @@ Common library for components of flink-streaming-components
 ```
 sbt clean
 sbt package
-sbt LocalPublic
+sbt publishLocal
 ```
