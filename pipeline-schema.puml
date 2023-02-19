@@ -1,0 +1,28 @@
+@startuml
+digraph dfd{
+	node[shape=record]
+
+	"input-json" [label="<f0> Kafka streaming-pipeline|<f1> 'input-json'"];
+	"input-avro" [label="<f0> Kafka streaming-pipeline|<f1> 'input-avro'"];
+    "output-env-monitoring-alarm" [label="<f0> Kafka streaming-pipeline|<f1> 'output-env-monitoring-alarm'"];
+
+    "streaming-kafka-connector (json)" [label="{<f0> 0.1|<f1> streaming-kafka-connector (json)\n\n\n}" shape=Mrecord];
+    "input-json" -> "streaming-kafka-connector (json)":f0
+
+    "streaming-kafka-connector (avro)" [label="{<f0> 0.1|<f1> streaming-kafka-connector (avro)\n\n\n}" shape=Mrecord];
+    "input-avro" -> "streaming-kafka-connector (avro)":f0
+
+   	"streaming-json-validator" [label="{<f0> 0.1|<f1> streaming-json-validator\n\n\n}" shape=Mrecord];
+   	"streaming-kafka-connector (json)" -> "streaming-json-validator":f0
+
+   	"streaming-avro-validator" [label="{<f0> 0.1|<f1> streaming-avro-validator\n\n\n}" shape=Mrecord];
+   	"streaming-kafka-connector (avro)" -> "streaming-avro-validator":f0
+
+   	"streaming-env-monitoring" [label="{<f0> 0.1|<f1> streaming-env-monitoring\n\n\n}" shape=Mrecord];
+   	"streaming-json-validator" -> "streaming-env-monitoring":f0
+   	"streaming-avro-validator" -> "streaming-env-monitoring":f0
+    "streaming-env-monitoring":f1 -> "output-env-monitoring-alarm"
+
+
+}
+@enduml
