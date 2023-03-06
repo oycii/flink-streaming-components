@@ -12,7 +12,7 @@ class AlarmMapService extends RichMapFunction[EnvMonitor, EnvMonitorAlarm] {
   private var envMonitorState: ValueState[EnvMonitor] = _
 
   override def map(newEnvMonitor: EnvMonitor): EnvMonitorAlarm = {
-    val currentEnvMonitor = if (null == envMonitorState.value()) None else Some(envMonitorState.value())
+    val currentEnvMonitor = Option(envMonitorState.value())
     envMonitorState.update(newEnvMonitor)
     val alarm = currentEnvMonitor match {
       case Some(current) =>
